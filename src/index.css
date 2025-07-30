@@ -1,2 +1,20 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@plugin "daisyui/theme" {
+  name: "courierdesk";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-base-100: oklch(97% 0.015 85);               /* Light stone background */
+  --color-base-content: oklch(25% 0.02 85);            /* Dark neutral text */
+
+  --color-primary: oklch(65% 0.09 240);                /* Muted soft blue */
+  --color-primary-content: oklch(98% 0.01 240);        /* Light text on primary */
+
+  --color-secondary: oklch(78% 0.07 135);              /* Soft green */
+  --color-secondary-content: oklch(22% 0.02 135);      /* Dark text on secondary */
+
+  --color-accent: oklch(88% 0.07 100);                 /* Creamy gold */
+  --color-accent-content: oklch(30% 0.03 100);         /* Accent text */
+}
