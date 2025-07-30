@@ -1,17 +1,38 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
+    const {signUp,setUser,updateUser} = useAuth();
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
     
-
     const onSubmit = data => {
-        console.log(data)
+        signUp(data.email,data.password)
+        .then(result=>{
+            const user = result.user;
+            
+            updateUser({ displayName: data.name, photoURL: data.photo || 'https://img.icons8.com/ios-glyphs/30/user--v1.png' })
+            .then(()=>{
+            setUser({...user, displayName: data.name, photoURL: data.photo || 'https://img.icons8.com/ios-glyphs/30/user--v1.png'});
+            toast.success("Registration successful!");
+            navigate('/');
+            })
+            .catch(error=>{
+                toast.error(error);
+                setUser(user);
+            })
+        })
+        .catch(error=>{
+            console.log(error);
+            toast.error(error.message);
+        })
     }
     
     return (
@@ -23,7 +44,7 @@ const Register = () => {
                 <label className="text-sm">Name*</label>
                 <input type="text" 
                 {...register('name', {required: true})}
-                placeholder="Enter your name" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800" />
+                placeholder="Enter your name" className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50" />
                 {
                     errors.name?.type === 'required' && <p className='text-red-500'>Name is required</p>
                 }
@@ -70,7 +91,7 @@ const Register = () => {
                 </div>
 
                 <p className="my-1 text-sm text-center text-base-content">Already have an account?
-                <Link to='/login' className="hover:underline text-primary-content"> Login</Link>
+                <Link to='/login' className="hover:underline text-primary"> Login</Link>
                 </p>
                 <button type='submit' className="btn w-full btn-primary  rounded-md">Register</button>
             </form>

@@ -1,9 +1,23 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router';
 import CourierDeskLogo from '../CourierDeskLogo/CourierDeskLogo';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
+import { IoLogIn } from 'react-icons/io5';
+import { MdLogout } from 'react-icons/md';
 
 
 const Navbar = () => {
+  const {user,logOut} = useAuth();
+
+  const handleLogOut = async () => {
+    await logOut().then(() => {
+        toast.success('Successfully logged out');
+    })
+    .catch(error => {
+        toast.error(error.message);
+    });
+  };
 
   const links = (
     <>
@@ -36,9 +50,44 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end">
-            <Link to="/login" className="btn text-white btn-primary p-2 text-sm rounded-md">
-              Login
-            </Link>
+          {user ? 
+            (<div className="dropdown dropdown-end">
+                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                      {user.photoURL && 
+                          <img src={user.photoURL} alt={user.displayName} />
+                      }
+                    </div>
+                </div>
+                <ul
+                    tabIndex={0}
+                    className="menu menu-sm dropdown-content gap-1 bg-base-100 rounded-box z-50 mt-3 wp-2 shadow"
+                        >
+                    <li className="cursor-default select-none text-base font-semibold px-4 py-2">
+                      {user.displayName}
+                    </li>
+                    <li>
+                    <NavLink to="/dashboard" className='font-normal text-sm' tabIndex={-1}>
+                      Dashboard
+                    </NavLink>
+                    </li>
+                    <li>
+                    <button
+                        onClick={handleLogOut}
+                        className="w-full flex text-sm font-normal"
+                        tabIndex={-1}
+                    >
+                        <span>Logout</span>
+                        <span><MdLogout size={15} /></span>
+                    </button>
+                    </li>
+                </ul>
+            </div>
+            ) :
+            (
+            <div>
+                <Link to='/login' className="btn btn-primary p-2 flex rounded-md"><span>Login</span><span><IoLogIn className='text-xl' /></span></Link>
+            </div>)}
         </div>
       </div>
     </div>

@@ -1,14 +1,29 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import { useForm } from 'react-hook-form';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const { signIn, setUser } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
-    console.log(data)
+    signIn(data.email, data.password)
+        .then(result => {
+            console.log(result.user);
+            setUser(result.user);
+
+            toast.success('Login successful');
+            navigate('/');
+        })
+        .catch(error => {
+            console.log(error)
+            toast.error(error.message);
+        })
   };
 
   return (
@@ -47,7 +62,7 @@ const Login = () => {
             <Link className="hover:underline text-secondary">Forgot password?</Link>
           </div>
 
-          <button type="submit" className="btn btn-primary w-full text-white">Log in</button>
+          <button type="submit" className="btn btn-primary w-full">Log in</button>
         </form>
 
         <div className="mt-6 space-y-2">

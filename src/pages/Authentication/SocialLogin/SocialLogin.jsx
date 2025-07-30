@@ -1,9 +1,22 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
+import useAuth from '../../../hooks/useAuth';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 const SocialLogin = () => {
+    const {setUser, googleSignIn} = useAuth();
+    const navigate = useNavigate();
     const handleGoogleLogin = () =>{
-       
+       googleSignIn().then(result=>{
+            setUser(result.user);
+            toast.success("Registration successful!");
+            navigate('/');
+        })
+        .catch(error=>{
+            console.log(error);
+            toast(error.message);
+        })
     }
 
     return (
