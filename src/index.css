@@ -18,3 +18,8 @@
   --color-accent: oklch(88% 0.07 100);                 /* Creamy gold */
   --color-accent-content: oklch(30% 0.03 100);         /* Accent text */
 }
+
+a.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}

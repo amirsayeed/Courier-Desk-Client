@@ -41,7 +41,7 @@ const DashboardLayout = () => {
             {/* Sidebar */}
             <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu bg-secondary text-secondary-content min-h-full gap-2 w-80 p-4 font-medium">
+            <ul className="menu bg-secondary text-secondary-content min-h-full gap-2 w-80 p-4 font-medium text-base">
 
             {/* Sidebar Logo */}
             <CourierDeskLogo />

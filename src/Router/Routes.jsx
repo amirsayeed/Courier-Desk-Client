@@ -9,6 +9,8 @@ import Register from '../pages/Authentication/Register/Register'
 import BookParcel from "../pages/BookAParcel/BookParcel";
 import PrivateRoute from "../routes/PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
+import MyParcels from "../pages/Dashboard/Customer/MyParcels/MyParcels";
+import TrackParcel from "../pages/Dashboard/Customer/TrackParcel/TrackParcel";
 
 
 export const router = createBrowserRouter([
@@ -42,6 +44,16 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <PrivateRoute><DashboardLayout/></PrivateRoute>
+    element: <PrivateRoute><DashboardLayout/></PrivateRoute>,
+    children: [
+      {
+        path: 'my-parcels',
+        Component: MyParcels
+      },
+      {
+        path: 'track',
+        Component: TrackParcel
+      }
+    ]
   }
 ]);
