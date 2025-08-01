@@ -2,16 +2,33 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import useAxios from '../../../hooks/useAxios';
 
 const SocialLogin = () => {
     const {setUser, googleSignIn} = useAuth();
     const navigate = useNavigate();
+    const axiosInstance = useAxios();
+    const location = useLocation();
     const handleGoogleLogin = () =>{
-       googleSignIn().then(result=>{
+       googleSignIn()
+       .then(async(result)=>{
+            const user = result.user;
+
+            const userInfo = {
+                name: user.displayName,
+                email: user.email,
+                role: 'customer', 
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            };
+
+            const userRes = await axiosInstance.post('/users',userInfo);
+            console.log(userRes.data);
+
             setUser(result.user);
             toast.success("Registration successful!");
-            navigate('/');
+            navigate(`${location?.state ? location.state : '/'}`);
         })
         .catch(error=>{
             console.log(error);

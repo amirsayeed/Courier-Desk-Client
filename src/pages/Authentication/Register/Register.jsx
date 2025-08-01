@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import useAuth from '../../../hooks/useAuth';
 import { toast } from 'react-toastify';
+import useAxios from '../../../hooks/useAxios';
 
 
 const Register = () => {
@@ -12,12 +13,26 @@ const Register = () => {
     const {register, handleSubmit, formState: { errors }} = useForm();
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+    const axiosInstance = useAxios();
     
     const onSubmit = data => {
         signUp(data.email,data.password)
-        .then(result=>{
+        .then(async(result)=>{
             const user = result.user;
             
+            // user update in database
+            const userInfo = {
+                name: data.name,
+                email: data.email,
+                role: 'customer', 
+                createdAt: new Date().toISOString(),
+                lastLogin: new Date().toISOString()
+            };
+
+            const userRes = await axiosInstance.post('/users',userInfo);
+            console.log(userRes.data);
+
+            //user update in firebase
             updateUser({ displayName: data.name, photoURL: data.photo || 'https://img.icons8.com/ios-glyphs/30/user--v1.png' })
             .then(()=>{
             setUser({...user, displayName: data.name, photoURL: data.photo || 'https://img.icons8.com/ios-glyphs/30/user--v1.png'});
