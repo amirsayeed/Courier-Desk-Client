@@ -1,6 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from '../../hooks/useAxiosSecure'
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const districtsData = [
   // Dhaka Division
@@ -22,6 +25,16 @@ const districtsData = [
 const BookParcel = () => {
   const { user } = useAuth();
   const { register, handleSubmit, watch } = useForm();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
+
+  const generateTrackingID = () => {
+    const date = new Date();
+    const datePart = date.toISOString().split("T")[0].replace(/-/g, "");
+    const rand = Math.random().toString(36).substring(2, 7).toUpperCase();
+    return `PCL-${datePart}-${rand}`;
+  };
+
 
   const pickupDivision = watch("pickupDivision");
   const deliveryDivision = watch("deliveryDivision");
@@ -30,9 +43,60 @@ const BookParcel = () => {
   const getDistricts = (division) =>
     districtsData.filter(d => d.division === division).map(d => d.district);
 
-  const onSubmit = (data) => {
-    console.log("Parcel Data", data);
+  const onSubmit = async (data) => {
+    const { parcelType, parcelSize, pickupDivision, pickupDistrict, deliveryDivision, deliveryDistrict, paymentMethod } = data;
+
+    const isSameDistrict = pickupDistrict === deliveryDistrict;
+    const isSameDivision = pickupDivision === deliveryDivision;
+
+    let totalCost = 0, baseCost = 0, extraCost = 0, surcharge = 0;
+    let weightValue = 1;
+    if (parcelSize === "Medium") weightValue = 3;
+    else if (parcelSize === "Large") weightValue = 5;
+
+    if (parcelType === "Document") {
+      totalCost = isSameDistrict ? 60 : 80;
+    } else {
+      baseCost = isSameDistrict ? 110 : 150;
+      if (weightValue > 3) {
+        extraCost = (weightValue - 3) * 40;
+      }
+      if (!isSameDivision) {
+        surcharge = 40;
+      }
+      totalCost = baseCost + extraCost + surcharge;
+    }
+
+    const result = await Swal.fire({
+      title: "Confirm Parcel Booking",
+      html: `Total Cost: ৳${totalCost} <br/> Payment Type: ${paymentMethod}`,
+      icon: "info",
+      showDenyButton: true,
+      confirmButtonText: paymentMethod === "Prepaid" ? "Proceed to Payment" : "Confirm Booking",
+      denyButtonText: "Edit Info"
+    });
+
+    if (result.isConfirmed) {
+      const parcelData = {
+        ...data,
+        totalCost,
+        trackingId: generateTrackingID(),
+        paymentStatus: paymentMethod === "COD" ? "unpaid" : "paid",
+        deliveryStatus: "not_collected",
+        createdAt: new Date().toISOString()
+      };
+
+      if (paymentMethod === "COD") {
+        const res = await axiosSecure.post("/parcels", parcelData);
+        if (res?.data?.insertedId) {
+          Swal.fire("Success!", "Parcel booked. Pay at delivery.", "success");
+        }
+      } else {
+        navigate('/');
+      }
+    }
   };
+
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-lg my-10">
@@ -43,6 +107,7 @@ const BookParcel = () => {
           <h3 className="font-semibold mb-2">Pickup Address</h3>
           <input {...register("senderName")} defaultValue={user?.displayName || ""} readOnly className="input input-bordered w-full mb-2" />
           <input {...register("pickupPhone")} placeholder="Phone" className="input input-bordered w-full mb-2" required />
+          <input {...register("senderEmail")} defaultValue={user?.email || ""}  placeholder="Email" className="input input-bordered w-full mb-2" required />
           <select {...register("pickupDivision")} className="select select-bordered w-full mb-2" required>
             <option value="">Select Division</option>
             <option value="Dhaka">Dhaka</option>
@@ -60,6 +125,7 @@ const BookParcel = () => {
           <h3 className="font-semibold mb-2">Delivery Address</h3>
           <input {...register("deliveryName")} placeholder="Recipient Name" className="input input-bordered w-full mb-2" required />
           <input {...register("deliveryPhone")} placeholder="Phone" className="input input-bordered w-full mb-2" required />
+          <input {...register("deliveryEmail")} placeholder="Email" className="input input-bordered w-full mb-2" required />
           <select {...register("deliveryDivision")} className="select select-bordered w-full mb-2" required>
             <option value="">Select Division</option>
             <option value="Dhaka">Dhaka</option>
@@ -104,6 +170,7 @@ const BookParcel = () => {
         </div>
       </form>
     </div>
+
   );
 };
 
