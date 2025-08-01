@@ -8,6 +8,7 @@ import Login from '../pages/Authentication/Login/Login'
 import Register from '../pages/Authentication/Register/Register'
 import BookParcel from "../pages/BookAParcel/BookParcel";
 import PrivateRoute from "../routes/PrivateRoute";
+import DashboardLayout from "../layouts/DashboardLayout";
 
 
 export const router = createBrowserRouter([
@@ -40,6 +41,7 @@ export const router = createBrowserRouter([
     ]
   },
   {
-    
+    path: '/dashboard',
+    element: <PrivateRoute><DashboardLayout/></PrivateRoute>
   }
 ]);
