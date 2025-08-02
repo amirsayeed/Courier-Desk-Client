@@ -12,6 +12,9 @@ import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/Customer/MyParcels/MyParcels";
 import TrackParcel from "../pages/Dashboard/Customer/TrackParcel/TrackParcel";
 import Payment from "../pages/Dashboard/Customer/Payment/Payment";
+import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
+import Forbidden from "../pages/Dashboard/Forbidden/Forbidden";
+import AdminRoute from "../routes/AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment',
         element: <PrivateRoute><Payment/></PrivateRoute>
+      },
+      {
+        path: 'forbidden',
+        Component: Forbidden
       }
     ]
   },
@@ -58,6 +65,12 @@ export const router = createBrowserRouter([
       {
         path: 'track',
         Component: TrackParcel
+      },
+
+      //admin routes
+      {
+        path: 'allUsers',
+        element: <AdminRoute><AllUsers/></AdminRoute>
       }
     ]
   }

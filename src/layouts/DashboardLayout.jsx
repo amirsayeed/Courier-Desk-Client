@@ -1,8 +1,10 @@
 import { NavLink, Outlet } from 'react-router';
 import CourierDeskLogo from '../components/Shared/CourierDeskLogo/CourierDeskLogo';
-import { FaBox, FaSearchLocation } from 'react-icons/fa';
+import { FaBox, FaSearchLocation, FaUsers } from 'react-icons/fa';
+import useUserRole from '../hooks/useUserRole';
 
 const DashboardLayout = () => {
+    const { role, roleLoading } = useUserRole();
 
     return (
         <div className="drawer lg:drawer-open">
@@ -47,22 +49,37 @@ const DashboardLayout = () => {
             <CourierDeskLogo />
 
             {/* Customer links */}
-            <li>
-            <NavLink to="/dashboard/my-parcels">
-                <FaBox className="inline mr-2" /> My Parcels
-            </NavLink>
-            </li>
-            <li>
-            <NavLink to="/dashboard/track">
-                <FaSearchLocation className="inline mr-2" /> Track Parcel
-            </NavLink>
-            </li>
+            {!roleLoading && role === 'customer' && (
+                <>
+                <li>
+                    <NavLink to="/dashboard/my-parcels">
+                        <FaBox className="inline mr-2" /> My Parcels
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard/track">
+                        <FaSearchLocation className="inline mr-2" /> Track Parcel
+                    </NavLink>
+                </li>
+                </>
+            )
+            }
 
             {/* moderator links */}
 
 
             {/* admin links */}
+            {!roleLoading && role === 'admin' && (
+                <>
+                    <li>
+                        <NavLink to="/dashboard/allUsers">
+                            <FaUsers className="inline mr-2" /> All Users
+                        </NavLink>
+                    </li>
+                </>
+            )
 
+            }
 
             </ul>
             </div>
