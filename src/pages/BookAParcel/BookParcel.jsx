@@ -90,9 +90,10 @@ const BookParcel = () => {
         const res = await axiosSecure.post("/parcels", parcelData);
         if (res?.data?.insertedId) {
           Swal.fire("Success!", "Parcel booked. Pay at delivery.", "success");
+          navigate('/dashboard/my-parcels');
         }
       } else {
-        navigate('/');
+        navigate('/payment', { state: parcelData });
       }
     }
   };
@@ -107,7 +108,7 @@ const BookParcel = () => {
           <h3 className="font-semibold mb-2">Pickup Address</h3>
           <input {...register("senderName")} defaultValue={user?.displayName || ""} readOnly className="input input-bordered w-full mb-2" />
           <input {...register("pickupPhone")} placeholder="Phone" className="input input-bordered w-full mb-2" required />
-          <input {...register("senderEmail")} defaultValue={user?.email || ""}  placeholder="Email" className="input input-bordered w-full mb-2" required />
+          <input {...register("senderEmail")} defaultValue={user?.email || ""}  placeholder="Email" readOnly className="input input-bordered w-full mb-2" required />
           <select {...register("pickupDivision")} className="select select-bordered w-full mb-2" required>
             <option value="">Select Division</option>
             <option value="Dhaka">Dhaka</option>

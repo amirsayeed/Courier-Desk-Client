@@ -11,6 +11,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyParcels from "../pages/Dashboard/Customer/MyParcels/MyParcels";
 import TrackParcel from "../pages/Dashboard/Customer/TrackParcel/TrackParcel";
+import Payment from "../pages/Dashboard/Customer/Payment/Payment";
 
 
 export const router = createBrowserRouter([
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: 'bookParcel',
         element: <PrivateRoute><BookParcel/></PrivateRoute>
+      },
+      {
+        path: 'payment',
+        element: <PrivateRoute><Payment/></PrivateRoute>
       }
     ]
   },
