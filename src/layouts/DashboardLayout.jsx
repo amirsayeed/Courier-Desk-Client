@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router';
 import CourierDeskLogo from '../components/Shared/CourierDeskLogo/CourierDeskLogo';
-import { FaBox, FaSearchLocation, FaUsers } from 'react-icons/fa';
+import { FaBox, FaSearchLocation, FaShippingFast, FaUsers } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole';
 
 const DashboardLayout = () => {
@@ -65,8 +65,18 @@ const DashboardLayout = () => {
             )
             }
 
-            {/* moderator links */}
-
+            {/* delivery agent links */}
+            {!roleLoading && role === 'delivery_agent' && (
+                <>
+                <li>
+                    <NavLink to="/dashboard/assignedParcels">
+                        <FaShippingFast className="inline mr-2" /> Assigned Parcels
+                    </NavLink>
+                </li>
+                
+                </>
+            )
+            }
 
             {/* admin links */}
             {!roleLoading && role === 'admin' && (

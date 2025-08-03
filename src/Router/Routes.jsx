@@ -16,6 +16,8 @@ import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import Forbidden from "../pages/Dashboard/Forbidden/Forbidden";
 import AdminRoute from "../routes/AdminRoute";
 import AllBookings from "../pages/Dashboard/Admin/AllBookings/AllBookings";
+import DeliveryAgentRoute from "../routes/DeliveryAgentRoute";
+import AssignedParcels from "../pages/Dashboard/DeliveryAgent/AssignedParcels/AssignedParcels";
 
 
 export const router = createBrowserRouter([
@@ -68,6 +70,11 @@ export const router = createBrowserRouter([
         Component: TrackParcel
       },
 
+      //delivery agent routes
+      {
+        path: 'assignedParcels',
+        element: <DeliveryAgentRoute><AssignedParcels/></DeliveryAgentRoute>
+      },
       //admin routes
       {
         path: 'allUsers',
