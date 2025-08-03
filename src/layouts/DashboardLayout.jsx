@@ -76,6 +76,11 @@ const DashboardLayout = () => {
                             <FaUsers className="inline mr-2" /> All Users
                         </NavLink>
                     </li>
+                    <li>
+                        <NavLink to="/dashboard/allBookings">
+                            <FaBox className="inline mr-2" /> All Bookings
+                        </NavLink>
+                    </li>
                 </>
             )
 

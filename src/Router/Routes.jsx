@@ -15,6 +15,7 @@ import Payment from "../pages/Dashboard/Customer/Payment/Payment";
 import AllUsers from "../pages/Dashboard/Admin/AllUsers/AllUsers";
 import Forbidden from "../pages/Dashboard/Forbidden/Forbidden";
 import AdminRoute from "../routes/AdminRoute";
+import AllBookings from "../pages/Dashboard/Admin/AllBookings/AllBookings";
 
 
 export const router = createBrowserRouter([
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
       {
         path: 'allUsers',
         element: <AdminRoute><AllUsers/></AdminRoute>
+      },
+      {
+        path: 'allBookings',
+        element: <AdminRoute><AllBookings/></AdminRoute>
       }
     ]
   }
