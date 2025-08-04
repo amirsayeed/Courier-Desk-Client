@@ -27,49 +27,49 @@ const DashboardStats = () => {
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-        <FaCalendarDay className="text-4xl text-primary mb-2" />
+        <FaCalendarDay className="text-2xl text-primary mb-2" />
         <h2 className="card-title text-lg">Bookings Today</h2>
-        <p className="text-3xl font-bold">{bookingsToday}</p>
+        <p className="text-2xl font-bold">{bookingsToday}</p>
         </div>
     </div>
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-            <FaShippingFast className="text-3xl text-primary mb-2" />
+            <FaShippingFast className="text-2xl text-primary mb-2" />
             <h2 className="card-title text-lg">In Transit Parcels</h2>
-            <p className="text-3xl font-bold text-primary">{inTransitParcels}</p>
+            <p className="text-2xl font-bold text-primary">{inTransitParcels}</p>
         </div>
     </div>
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-            <FaCheckCircle className="text-3xl text-success mb-2" />
+            <FaCheckCircle className="text-2xl text-success mb-2" />
             <h2 className="card-title text-lg">Delivered Parcels</h2>
-            <p className="text-3xl font-bold text-success">{deliveredParcels}</p>
+            <p className="text-2xl font-bold text-success">{deliveredParcels}</p>
         </div>
     </div>
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-        <FaTimesCircle className="text-3xl text-error mb-2" />
+        <FaTimesCircle className="text-2xl text-error mb-2" />
         <h2 className="card-title text-lg">Failed Deliveries</h2>
-        <p className="text-3xl font-bold text-error">{failedDeliveries}</p>
+        <p className="text-2xl font-bold text-error">{failedDeliveries}</p>
         </div>
     </div>
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-        <FaMoneyBillWave className="text-3xl text-success mb-2" />
+        <FaMoneyBillWave className="text-2xl text-success mb-2" />
         <h2 className="card-title text-lg">COD Collected</h2>
-        <p className="text-3xl font-bold text-success">৳{codCollected.toLocaleString()}</p>
+        <p className="text-2xl font-bold text-success">৳{codCollected.toLocaleString()}</p>
         </div>
     </div>
 
     <div className="card bg-base-100 shadow-lg border-2 border-secondary">
         <div className="card-body items-center text-center">
-        <FaBoxOpen className="text-4xl text-warning mb-2" />
+        <FaBoxOpen className="text-2xl text-warning mb-2" />
         <h2 className="card-title text-lg">Total Parcels</h2>
-        <p className="text-3xl font-bold">{totalParcels}</p>
+        <p className="text-2xl font-bold">{totalParcels}</p>
         </div>
     </div>
     </div>
