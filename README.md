@@ -12,6 +12,15 @@
 
 ---
 
+## 🧪 Test Admin Credentials
+
+> Use the following to log in as an admin and explore the dashboard:
+
+- **Email:** `admin@courierdesk.com`
+- **Password:** `Admin1`
+
+---
+
 ## 🎯 Features
 
 ### 👤 Authentication & Authorization
