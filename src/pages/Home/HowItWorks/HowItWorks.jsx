@@ -16,18 +16,12 @@ const steps = [
   },
   {
     id: 3,
-    icon: <CreditCard size={40} className="text-primary" />,
-    title: 'Choose Payment',
-    description: 'Pay online with Stripe or opt for Cash on Delivery (COD).',
-  },
-  {
-    id: 4,
     icon: <ListChecks size={40} className="text-primary" />,
     title: 'View Booking History',
     description: 'Check statuses of all your bookings in one convenient dashboard.',
   },
   {
-    id: 5,
+    id: 4,
     icon: <MapPin size={40} className="text-primary" />,
     title: 'Track Your Parcel',
     description: 'Follow your delivery live on map from dispatch to delivery.',
@@ -44,9 +38,9 @@ const HowItWorks = () => {
         <p className="text-base-content font-medium max-w-2xl mx-auto">
           Sending a parcel is now easier than ever. Follow these 5 simple steps to get started.
         </p>
-        <div className="flex flex-wrap justify-center gap-6 mt-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-6 mt-10">
           {steps.map((step) => (
-            <div key={step.id} className="card w-80 border border-primary shadow-lg hover:shadow-xl transition">
+            <div key={step.id} className="card border border-primary shadow-lg hover:shadow-xl transition">
               <div className="card-body items-center text-center">
                 <div className="mb-4">{step.icon}</div>
                 <h3 className="card-title text-lg font-bold">{step.title}</h3>
