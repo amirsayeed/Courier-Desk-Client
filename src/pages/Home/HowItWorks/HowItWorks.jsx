@@ -36,11 +36,11 @@ const HowItWorks = () => {
           How CourierDesk Works
         </h2>
         <p className="text-base-content font-medium max-w-2xl mx-auto">
-          Sending a parcel is now easier than ever. Follow these 5 simple steps to get started.
+          Sending a parcel is now easier than ever. Follow these 4 simple steps to get started.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center gap-6 mt-10">
           {steps.map((step) => (
-            <div key={step.id} className="card border border-primary shadow-lg hover:shadow-xl transition">
+            <div key={step.id} className="card border border-primary shadow-lg hover:shadow-xl transition rounded-2xl">
               <div className="card-body items-center text-center">
                 <div className="mb-4">{step.icon}</div>
                 <h3 className="card-title text-lg font-bold">{step.title}</h3>

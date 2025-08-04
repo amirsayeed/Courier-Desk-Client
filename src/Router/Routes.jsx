@@ -21,7 +21,6 @@ import AssignedParcels from "../pages/Dashboard/DeliveryAgent/AssignedParcels/As
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
 
 
-
 export const router = createBrowserRouter([
   {
     path: "/",
