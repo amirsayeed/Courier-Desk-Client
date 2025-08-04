@@ -61,20 +61,20 @@ const Navbar = () => {
                 </div>
                 <ul
                     tabIndex={0}
-                    className="menu menu-sm dropdown-content gap-1 bg-base-100 rounded-box z-50 mt-3 wp-2 shadow"
+                    className="menu menu-sm dropdown-content gap-1 bg-base-100 rounded-box z-50 mt-3 w-40 p-2 shadow"
                         >
-                    <li className="cursor-default select-none text-base font-semibold px-4 py-2">
+                    <li className="cursor-default select-none font-semibold px-4 py-2">
                       {user.displayName}
                     </li>
                     <li>
-                    <NavLink to="/dashboard" className='font-normal text-sm' tabIndex={-1}>
+                    <NavLink to="/dashboard" className='justify-between' tabIndex={-1}>
                       Dashboard
                     </NavLink>
                     </li>
                     <li>
                     <button
                         onClick={handleLogOut}
-                        className="w-full flex text-sm font-normal"
+                        className="w-full text-left"
                         tabIndex={-1}
                     >
                         <span>Logout</span>

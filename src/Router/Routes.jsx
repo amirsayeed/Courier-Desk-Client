@@ -18,6 +18,8 @@ import AdminRoute from "../routes/AdminRoute";
 import AllBookings from "../pages/Dashboard/Admin/AllBookings/AllBookings";
 import DeliveryAgentRoute from "../routes/DeliveryAgentRoute";
 import AssignedParcels from "../pages/Dashboard/DeliveryAgent/AssignedParcels/AssignedParcels";
+import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+
 
 
 export const router = createBrowserRouter([
@@ -61,6 +63,10 @@ export const router = createBrowserRouter([
     path: '/dashboard',
     element: <PrivateRoute><DashboardLayout/></PrivateRoute>,
     children: [
+      {
+        index: true,
+        Component: DashboardHome
+      },
       {
         path: 'my-parcels',
         Component: MyParcels

@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router';
 import CourierDeskLogo from '../components/Shared/CourierDeskLogo/CourierDeskLogo';
-import { FaBox, FaSearchLocation, FaShippingFast, FaUsers } from 'react-icons/fa';
+import { FaBox, FaHome, FaSearchLocation, FaShippingFast, FaUsers } from 'react-icons/fa';
 import useUserRole from '../hooks/useUserRole';
 
 const DashboardLayout = () => {
@@ -43,7 +43,7 @@ const DashboardLayout = () => {
             {/* Sidebar */}
             <div className="drawer-side">
             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay"></label>
-            <ul className="menu bg-secondary text-secondary-content min-h-full gap-2 w-80 p-4 font-medium text-base">
+            <ul className="menu bg-secondary text-secondary-content min-h-full gap-2 w-72 p-4 font-medium text-base">
 
             {/* Sidebar Logo */}
             <CourierDeskLogo />
@@ -51,6 +51,11 @@ const DashboardLayout = () => {
             {/* Customer links */}
             {!roleLoading && role === 'customer' && (
                 <>
+                <li>
+                    <NavLink to="/dashboard" end>
+                        <FaHome className="inline mr-2" /> Dashboard Home
+                    </NavLink>
+                </li>
                 <li>
                     <NavLink to="/dashboard/my-parcels">
                         <FaBox className="inline mr-2" /> My Parcels
@@ -69,6 +74,11 @@ const DashboardLayout = () => {
             {!roleLoading && role === 'delivery_agent' && (
                 <>
                 <li>
+                    <NavLink to="/dashboard" end>
+                        <FaHome className="inline mr-2" /> Dashboard Home
+                    </NavLink>
+                </li>
+                <li>
                     <NavLink to="/dashboard/assignedParcels">
                         <FaShippingFast className="inline mr-2" /> Assigned Parcels
                     </NavLink>
@@ -81,16 +91,21 @@ const DashboardLayout = () => {
             {/* admin links */}
             {!roleLoading && role === 'admin' && (
                 <>
-                    <li>
-                        <NavLink to="/dashboard/allUsers">
-                            <FaUsers className="inline mr-2" /> All Users
-                        </NavLink>
-                    </li>
-                    <li>
-                        <NavLink to="/dashboard/allBookings">
-                            <FaBox className="inline mr-2" /> All Bookings
-                        </NavLink>
-                    </li>
+                <li>
+                    <NavLink to="/dashboard" end>
+                        <FaHome className="inline mr-2" /> Dashboard Home
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard/allUsers">
+                        <FaUsers className="inline mr-2" /> All Users
+                    </NavLink>
+                </li>
+                <li>
+                    <NavLink to="/dashboard/allBookings">
+                        <FaBox className="inline mr-2" /> All Bookings
+                    </NavLink>
+                </li>
                 </>
             )
 
