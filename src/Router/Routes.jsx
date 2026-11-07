@@ -19,6 +19,8 @@ import AllBookings from "../pages/Dashboard/Admin/AllBookings/AllBookings";
 import DeliveryAgentRoute from "../routes/DeliveryAgentRoute";
 import AssignedParcels from "../pages/Dashboard/DeliveryAgent/AssignedParcels/AssignedParcels";
 import DashboardHome from "../pages/Dashboard/DashboardHome/DashboardHome";
+import AboutUs from "../pages/AboutUs/AboutUs";
+import ContactUs from "../pages/ContactUs/ContactUs";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +39,14 @@ export const router = createBrowserRouter([
       {
         path: 'payment',
         element: <PrivateRoute><Payment/></PrivateRoute>
+      },
+      {
+        path: 'about',
+        Component: AboutUs
+      },
+      {
+        path: 'contact',
+        Component: ContactUs
       },
       {
         path: 'forbidden',

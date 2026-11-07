@@ -3,7 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import useAuth from "../../../../hooks/useAuth";
 import useAxiosSecure from "../../../../hooks/useAxiosSecure";
 import Loading from "../../../../components/Shared/Loading/Loading";
+import { Link } from "react-router";
 
+const trackableStatuses = new Set(["picked up", "in transit", "delivered", "failed"]);
 
 const MyParcels = () => {
   const { user } = useAuth();
@@ -44,17 +46,44 @@ const MyParcels = () => {
               </tr>
             </thead>
             <tbody>
-              {parcels.map(({ _id, trackingId, parcelType, paymentStatus, deliveryStatus, createdAt }) => (
-                <tr key={_id.$oid || _id}>
-                  <td className="font-mono">{trackingId}</td>
-                  <td>{parcelType}</td>
-                  <td className={paymentStatus === "paid" ? "text-green-600" : "text-red-600"}>
-                    {paymentStatus}
-                  </td>
-                  <td>{deliveryStatus.replace(/_/g, " ")}</td>
-                  <td>{new Date(createdAt).toLocaleString()}</td>
-                </tr>
-              ))}
+              {parcels.map((parcel) => {
+                const {
+                  _id,
+                  trackingId,
+                  parcelType,
+                  paymentStatus,
+                  deliveryStatus,
+                  statusLogs = [],
+                  createdAt
+                } = parcel;
+                const currentStatus = (deliveryStatus || "").replace(/_/g, " ").toLowerCase();
+                const hasBeenPickedUp = trackableStatuses.has(currentStatus) ||
+                  statusLogs.some((log) =>
+                    trackableStatuses.has((log.status || "").replace(/_/g, " ").toLowerCase())
+                  );
+
+                return (
+                  <tr key={_id.$oid || _id}>
+                    <td className="font-mono">
+                      {trackingId}
+                      {hasBeenPickedUp && (
+                        <Link
+                          to={`/dashboard/track?trackingId=${encodeURIComponent(trackingId)}`}
+                          className="link link-primary ml-3 font-sans"
+                        >
+                          Track
+                        </Link>
+                      )}
+                    </td>
+                    <td>{parcelType}</td>
+                    <td className={paymentStatus === "paid" ? "text-green-600" : "text-red-600"}>
+                      {paymentStatus}
+                    </td>
+                    <td>{(deliveryStatus || "Pending").replace(/_/g, " ")}</td>
+                    <td>{new Date(createdAt).toLocaleString()}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
